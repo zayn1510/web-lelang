@@ -48,6 +48,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <div  class="row">
+                                <div class="col-md-4">
+                                    <div class="alert alert-danger poppins error-delete-kkn">Hapus data gagal !</div>
+                                    <div class="alert alert-success poppins success-delete-kkn">Hapus data berhasil</div>
+                                </div>
+                            </div>
                             <table datatable="ng" class="table table-bordered poppins">
                                 <thead class="bg-light" style="font-size: 12px;">
                                     <tr class="text-center">
@@ -80,7 +86,7 @@
                                             <span class="fa fa-edit" style="font-size: 20px;color: yellow;cursor: pointer;"
                                                 ng-click="editData(row)"></span>
                                             <span class="fa fa-trash" style="font-size: 20px;color:red;cursor: pointer;"
-                                                ng-click="delete(row)"></span>
+                                                ng-click="deleteData(row.id_calon_kkn)"></span>
                                         </td>
                                     </tr>
                                 </tbody>
