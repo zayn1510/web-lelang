@@ -1,28 +1,37 @@
-
-
-.form-berita .error-input
-{
+.form-berita .error-input {
     outline: none !important;
-    border:2px solid red;
+    border: 2px solid red;
     box-shadow: 0 0 10px #719ECE;
-}
-.form-bereita .error-input:focus{
-    outline: none !important;
-    border:2px solid black;
-    box-shadow: 0 0 10px #719ECE;
-}
-.form-gp .error-input{
-    outline: none !important;
-    border-bottom:2px solid red;
 }
 
-.form-login .error-input:focus{
+.form-bereita .error-input:focus {
     outline: none !important;
-    border:2px solid black;
+    border: 2px solid black;
     box-shadow: 0 0 10px #719ECE;
 }
-.form-periode .error-input{
+
+.form-gp .error-input {
     outline: none !important;
-    border:2px solid red;
+    border-bottom: 2px solid red;
+}
+
+.form-login .error-input:focus {
+    outline: none !important;
+    border: 2px solid black;
     box-shadow: 0 0 10px #719ECE;
+}
+
+.form-periode .error-input {
+    outline: none !important;
+    border: 2px solid red;
+    box-shadow: 0 0 10px #719ECE;
+}
+
+.error-delete-kkn {
+    margin-top: 20px;
+    display: none;
+}
+.success-delete-kkn{
+    margin-top: 20px;
+    display: none;
 }
