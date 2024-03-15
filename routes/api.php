@@ -55,16 +55,19 @@ Route::prefix("v1")->group(function(){
             Route::get("load-data-mahasiswa",[MahasiswaController::class,"loadData"])->name("load-data-mahasiswa");
             Route::post("save-data-mahasiswa",[MahasiswaController::class,"saveData"])->name("save-data-mahasiswa");
             Route::put("update-data-mahasiswa",[MahasiswaController::class,"updateData"])->name("update-data-mahasiswa");
-            Route::delete("delete-data-mahasiswa/{id}",[MahasiswaController::class,"deleteData"])->name("delete-data-jurusan");
+            Route::delete("delete-data-mahasiswa/{id}",[MahasiswaController::class,"deleteData"])->name("delete-data-mahasiswa");
             Route::post("upload-foto-mhs/{nim}",[MahasiswaController::class,"upload_foto_mhs"])->name("upload-foto-mhs");
             Route::get("load-data-calon-kkn",[CalonKknController::class,"loadDataCalonKkn"]);
-            Route::post("save-data-calon-kkn",[CalonKknController::class,"saveDataCalonKkn"]);
             Route::put("konfirmasi-status",[CalonKknController::class,"konfirmasiCalonKkn"]);
             Route::delete("delete-data-calon-kkn/{id}",[CalonKknController::class,"deleteDataCalonKkn"]);
             Route::get("berkas-calon-kkn/{id}",[CalonKknController::class,"getBerkasCalonKkn"]);
             Route::get("get-calon-kkn-periode/{id}",[CalonKknController::class,"getDataByPeriode"]);
             Route::post("check-duplicate",[MahasiswaController::class,"checkDuplicate"]);
             Route::post("insert-excel",[MahasiswaController::class,"insertExcel"]);
+        });
+
+        Route::prefix("kkn")->group(function(){
+            Route::post("create",[CalonKknController::class,"saveDataCalonKkn"]);
         });
 
         Route::prefix("periode-kkn")->group(function(){
