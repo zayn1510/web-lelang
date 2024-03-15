@@ -12,7 +12,7 @@ class Uploadfile{
     public static function upload_foto_mahasiswa(Request $request,$nim_mhs){
 
         $path_file="mahasiswa/".$nim_mhs."/";
-        $upload_path=public_path($path_file);
+        $upload_path=$path_file;
 
         if(!File::isDirectory($upload_path)){
             File::makeDirectory($upload_path,0755,true,true);
@@ -33,7 +33,7 @@ class Uploadfile{
     public static function upload_foto_calon_kkn_mhs(BerkasRequest $berkasRequest,$nim_mhs){
 
         $path_file="mahasiswa/calonkkn/foto/".$nim_mhs."/";
-        $upload_path=public_path($path_file);
+        $upload_path=$path_file;
 
         if(!File::isDirectory($upload_path)){
             File::makeDirectory($upload_path,0755,true,true);
@@ -56,7 +56,7 @@ class Uploadfile{
     $nim_mhs=$request->nim;
     $tipe=$request->tipe;
     $path_file="calonkkn/".$tipe."/".$nim_mhs."/";
-        $upload_path=public_path($path_file);
+        $upload_path=$path_file;
 
         if(!File::isDirectory($upload_path)){
             File::makeDirectory($upload_path,0755,true,true);
@@ -78,7 +78,7 @@ class Uploadfile{
     public static function upload_surat_izin_ortu(BerkasRequest $berkasRequest,$nim_mhs){
 
         $path_file="mahasiswa/calonkkn/orangtua/".$nim_mhs."/";
-            $upload_path=public_path($path_file);
+            $upload_path=$path_file;
 
             if(!File::isDirectory($upload_path)){
                 File::makeDirectory($upload_path,0755,true,true);
@@ -99,7 +99,7 @@ class Uploadfile{
         public static function upload_sertifikat_vaksin(BerkasRequest $berkasRequest,$nim_mhs){
 
                 $path_file="mahasiswa/calonkkn/vaksi/".$nim_mhs."/";
-                $upload_path=public_path($path_file);
+                $upload_path=$path_file;
 
                 if(!File::isDirectory($upload_path)){
                     File::makeDirectory($upload_path,0755,true,true);
@@ -119,7 +119,7 @@ class Uploadfile{
         public static function upload_thumbnail($request){
 
             $path_file="berita/";
-            $upload_path=public_path($path_file);
+            $upload_path=$path_file;
 
             if(!File::isDirectory($upload_path)){
                 File::makeDirectory($upload_path,0755,true,true);
