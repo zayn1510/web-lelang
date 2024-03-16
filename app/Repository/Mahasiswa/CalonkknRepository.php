@@ -5,6 +5,7 @@ namespace App\Repository\Mahasiswa;
 use App\Http\Requests\mahasiswa\BerkasRequest;
 use App\Http\Requests\mahasiswa\CalonKknRequest;
 use App\Http\Resources\api\mahasiswa\CalonKknResource;
+use App\Models\mahasiswa\berkasCalonKknModel;
 use App\Models\mahasiswa\CalonkknModel;
 use App\Models\mahasiswa\MahasiswaModel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -137,13 +138,16 @@ class CalonkknRepository
             $result = DB::table("tbl_calon_kkn as ck")->
                 join("tbl_periode_kkn as pk", "pk.id_periode_kkn", "=", "ck.id_periode_kkn")->
                 join("tbl_mahasiswa as mhs", "mhs.id_mhs", "=", "ck.id_mhs")->
+                join("tbl_fakultas as f", "f.id_fakultas", "=", "mhs.id_fakultas")->
+                join("tbl_jurusan as j", "j.id_jurusan", "=", "mhs.id_jurusan")->
                 leftJoin("tbl_detail_anggota_kkn as dak", "dak.id_calon_kkn", "=", "ck.id_calon_kkn")->
                 where("pk.status", 1)->
+                where("ck.group", 0)->
                 select("ck.id_calon_kkn", "mhs.nama_mhs", "mhs.nim_mhs", "ck.id_mhs", "ck.email", "ck.nomor_hp",
                 "ck.kode_calon_kkn", "ck.ukuran_baju", "ck.kecamatan", "ck.kabupaten", "ck.desa",
                 "ck.id_berkas_calon", "ck.tgl_daftar", "ck.status", "ck.id_periode_kkn",
                 "pk.tahun_akademik", "pk.angkatan", "pk.tgl_akademik", "mhs.tempat_lahir_mhs", "mhs.tgl_lahir_mhs",
-                "mhs.angkatan_mhs", "dak.id as id_detail"
+                "mhs.angkatan_mhs", "dak.id as id_detail", "f.nama_fakultas", "j.nama_jurusan"
             )->get();
 
             return response()->json([
@@ -238,8 +242,9 @@ class CalonkknRepository
 
             $calonkkn = DB::table("tbl_calon_kkn as calon")->
                 join("tbl_mahasiswa as mhs", 'mhs.id_mhs', "=", "calon.id_mhs")->
-                whereRaw("id_calon_kkn=?", [$id])->selectRaw("mhs.nim_mhs")->first();
+                whereRaw("id_calon_kkn=?", [$id])->selectRaw("mhs.nim_mhs,calon.id_berkas_calon,calon.id_calon_kkn")->first();
             $nim = $calonkkn->nim_mhs;
+            $idberkas = $calonkkn->id_berkas_calon;
             $pathfoto = 'calonkkn/foto/' . $nim;
             $pathkrs = 'calonkkn/krs_terakhir/' . $nim;
             $pathsuratizinatasan = 'calonkkn/surat_izin_atasan/' . $nim;
@@ -258,6 +263,8 @@ class CalonkknRepository
             File::deleteDirectory($pathsuratizinortu);
             File::deleteDirectory($pathtranskipnilai);
             CalonkknModel::findOrFail($id)->delete();
+            DB::table("tbl_detail_anggota_kkn")->whereRaw("id_calon_kkn=?", [$calonkkn->id_calon_kkn])->delete();
+            berkasCalonKknModel::whereRaw("id_berkas_calon_kkn=?", $idberkas)->delete();
             DB::commit();
             return response()->json(["message" => "success", "success" => true], 200);
 

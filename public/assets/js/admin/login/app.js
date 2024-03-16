@@ -37,20 +37,23 @@ app.controller("homeController", function ($scope, service) {
     }
     fun.loginAkun = () => {
 
+
         var checkvalidation = fun.checkValidation();
         if (!checkvalidation) {
+            $(".btn-submit").hide();
+            $(".btn-ring").show();
             const obj = {
                 username: username.value,
                 password: password.value
             }
             service.LoginAkun(obj, (res) => {
 
+
                 var success = res.success;
                 if (!success) {
-                    swal({
-                        text: "Login Gagal !",
-                        icon: "error"
-                    });
+                    $("#alert-error").removeClass("hide");
+                    $(".btn-submit").show();
+                    $(".btn-ring").hide();
                     return;
                 }
                 setInterval(function () {

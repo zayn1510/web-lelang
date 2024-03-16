@@ -28,7 +28,7 @@ class GroupController extends Controller
      */
     public function __construct(GroupRepo $groupRepo)
     {
-        $this->grouprepo=$groupRepo;
+        $this->grouprepo = $groupRepo;
     }
 
     /**
@@ -36,7 +36,7 @@ class GroupController extends Controller
      * @param \App\Http\Requests\master\GroupKknRequest $groupKknRequest
      * @return \Illuminate\Http\JsonResponse
      */
-    public function save_data(GroupKknRequest $groupKknRequest) : JsonResponse
+    public function save_data(GroupKknRequest $groupKknRequest): JsonResponse
     {
         return $this->grouprepo->saveData($groupKknRequest);
     }
@@ -45,7 +45,7 @@ class GroupController extends Controller
      * Summary of get_data
      * @return \Illuminate\Http\JsonResponse
      */
-    public function get_data() : JsonResponse
+    public function get_data(): JsonResponse
     {
         return $this->grouprepo->getData();
     }
@@ -55,7 +55,7 @@ class GroupController extends Controller
      * @param mixed $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function delete_data($id) : JsonResponse
+    public function delete_data($id): JsonResponse
     {
         return $this->grouprepo->deleteData($id);
     }
@@ -65,13 +65,18 @@ class GroupController extends Controller
      * @param mixed $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function detail_data($id) : JsonResponse
+    public function detail_data($id): JsonResponse
     {
         return $this->grouprepo->detailData($id);
     }
 
-    public function get_data_user_group($id) : JsonResponse
+    public function get_data_user_group($id): JsonResponse
     {
         return $this->grouprepo->getDataUserGroup($id);
+    }
+
+    public function unassign_mahasiswa_in_group(int $id): JsonResponse
+    {
+        return $this->grouprepo->unassignGroup($id);
     }
 }

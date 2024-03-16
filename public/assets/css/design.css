@@ -366,6 +366,9 @@
 .cursor {
     cursor: pointer;
 }
+.txt-blue{
+    color: #0275d8;
+}
 
 .cursor .field:hover {
     box-shadow: rgba(14, 52, 121, 0.3) 0px 19px 38px, rgba(30, 12, 114, 0.22) 0px 15px 12px;
@@ -449,3 +452,33 @@ td .btn-edit {
     font-weight: bold;
   }
 
+  .btn-ring{
+    display: none;
+  }
+
+  .btn-ring:after {
+    content: "";
+    display: block;
+    width: 25px;
+    height: 25px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 3px solid #387be2;
+    border-color: #0275d8 transparent #0275d8 transparent;
+    animation: ring 1.2s linear infinite;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  }
+  @keyframes ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+.hide{
+    display: none;
+}

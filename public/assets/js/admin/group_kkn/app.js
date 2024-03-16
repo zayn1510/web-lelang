@@ -19,6 +19,7 @@ app.controller("homeController", function ($scope, service) {
     ];
 
     var data_insert = [];
+    var idgroup = 0;
 
     var groupkkn = document.getElementsByClassName("group");
 
@@ -114,6 +115,7 @@ app.controller("homeController", function ($scope, service) {
         fun.desa = row.kabupaten + " " + row.kecamatan + " " + row.desa;
         fun.posko = row.desa;
         fun.jumlah = row.jumlah;
+        idgroup = row.id;
         service.detailGroupKkn(row.id, res => {
             fun.datadetail = res.data;
         });
@@ -128,6 +130,7 @@ app.controller("homeController", function ($scope, service) {
 
             return true;
         }
+
         const data = {
             id_dpl: groupkkn[0].value,
             id_desa: groupkkn[1].value,
@@ -141,6 +144,7 @@ app.controller("homeController", function ($scope, service) {
                 });
                 fun.checkerror = false;
                 fun.cancel();
+                data_insert = [];
                 return true;
             }
             swal({
@@ -210,6 +214,25 @@ app.controller("homeController", function ($scope, service) {
             btnsavegroup.setAttribute("disabled", true);
         }
 
+    }
+    fun.unassignGroup = (row, evt) => {
+        const nextelement = $(evt.target).next().get(0);
+        $(nextelement).show();
+        $(evt.target).hide();
+
+        service.unassignGroup(row.anggota, res => {
+            const { success } = res;
+            if (!success) {
+                swal({
+                    text: "Hapus data gagal !!",
+                    icon: "error"
+                });
+                return;
+            }
+            service.detailGroupKkn(idgroup, res => {
+                fun.datadetail = res.data;
+            });
+        });
     }
 
 });

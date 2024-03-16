@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div  class="row">
+                            <div class="row">
                                 <div class="col-md-4">
                                     <div class="alert alert-danger poppins error-delete-kkn">Hapus data gagal !</div>
                                     <div class="alert alert-success poppins success-delete-kkn">Hapus data berhasil</div>
@@ -83,11 +83,14 @@
                                         </td>
                                         <td>@{{ row.tgl_akademik }}</td>
                                         <td>
-                                            <span class="fa fa-edit" style="font-size: 20px;color: yellow;cursor: pointer;"
-                                                ng-click="editData(row)"></span>
-                                            <span class="fa fa-trash" style="font-size: 20px;color:red;cursor: pointer;"
-                                                ng-click="deleteData(row.id_calon_kkn)"></span>
+                                            <button class="alert alert-primary btn-edit" ng-click="editData(row)"> Detail
+                                                Data</button>
+                                            <button class="alert alert-danger btn-delete"
+                                                ng-click="deleteData(row.id_calon_kkn)"> Hapus
+                                                Data </button>
+
                                         </td>
+
                                     </tr>
                                 </tbody>
                             </table>
@@ -108,7 +111,7 @@
                         </div>
                         <div class="data-tab">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <div class="col-12 detail-profil-mhs">
                                         <div class="row sub-profil">
                                             <div class="col-12">
@@ -170,7 +173,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="row sub-profil">
                                         <div class="col-12">
                                             <div class="profil-img">
@@ -178,66 +181,74 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="profil-mhs">
-                                                <p>Kode Calon KKN</p>
-                                                <p class="field">@{{ kode_calon_kkn }}</p>
-                                            </div>
-                                            <div class="profil-mhs">
-                                                <p>Ukuran Baju</p>
-                                                <p class="field">@{{ ukuran_baju }}</p>
-                                            </div>
-                                            <div class="profil-mhs cursor">
-                                                <p>Surat Izin Atasan</p>
-                                                <p class="field"
-                                                    ng-click="openFile('surat_izin_atasan',surat_izin_atasan)">
-                                                    @{{ surat_izin_atasan }}</p>
-                                            </div>
-                                            <div class="profil-mhs cursor">
-                                                <p>Surat Izin Orang Tua</p>
-                                                <p class="field" ng-click="openFile('surat_izin_ortu',surat_izin_ortu)">
-                                                    @{{ surat_izin_ortu }}</p>
-                                            </div>
-                                            <div class="profil-mhs cursor">
-                                                <p>Sertifikat Vaksin</p>
-                                                <p class="field"
-                                                    ng-click="openFile('sertifikat_vaksin',sertifikat_vaksin)">
-                                                    @{{ sertifikat_vaksin }}</p>
-                                            </div>
-
-                                            <div class="profil-mhs cursor">
-                                                <p>KRS Terakhir</p>
-                                                <p class="field" ng-click="openFile('krs_terakhir',krs_terakhir)">
-                                                    @{{ krs_terakhir }}</p>
-                                            </div>
-                                            <div class="profil-mhs cursor">
-                                                <p>Transkip Nilai</p>
-                                                <p class="field" ng-click="openFile('transkip_nilai',transkip_nilai)">
-                                                    @{{ transkip_nilai }}</p>
-                                            </div>
-                                            <div class="profil-mhs cursor">
-                                                <p>Slip Pembayaran Semester Terakhir</p>
-                                                <p class="field"
-                                                    ng-click="openFile('slip_pembayaran_smt',slip_pembayaran_smt)">
-                                                    @{{ slip_pembayaran_smt }}</p>
-                                            </div>
-                                            <div class="profil-mhs cursor">
-                                                <p>Slip Pembayaran KKN</p>
-                                                <p class="field"
-                                                    ng-click="openFile('slip_pembayaran_kkn',slip_pembayaran_kkn)">
-                                                    @{{ slip_pembayaran_kkn }}</p>
-                                            </div>
-                                            <div class="profil-mhs cursor">
-                                                <p>Status</p>
-                                                <div class="field-form">
-                                                    <select class="form-control" ng-model="checkstatus" id="status">
-                                                        <option ng-repeat="row in datastatus"
-                                                            value="@{{ row.status }}">@{{ row.caption }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-
-                                            </div>
+                                            <table class="table table-responsive poppins">
+                                                <tr>
+                                                    <th>Kode Calon KKN</th>
+                                                    <td>@{{ kode_calon_kkn }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Ukuran Baju</th>
+                                                    <td>@{{ ukuran_baju }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Surat Izin Atasan</th>
+                                                    <td>
+                                                        <p class="field cursor txt-blue"
+                                                            ng-click="openFile('surat_izin_atasan',surat_izin_atasan)">
+                                                            @{{ surat_izin_atasan }}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Surat Izin Orang Tua</th>
+                                                    <td>
+                                                        <p class="field cursor txt-blue"
+                                                            ng-click="openFile('surat_izin_ortu',surat_izin_ortu)">
+                                                            @{{ surat_izin_ortu }}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>KRS Terakhir</th>
+                                                    <td>
+                                                        <p class="field cursor txt-blue"
+                                                            ng-click="openFile('krs_terakhir',krs_terakhir)">
+                                                            @{{ krs_terakhir }}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Sertifikat Vaksin</th>
+                                                    <td>
+                                                        <p class="field cursor txt-blue"
+                                                            ng-click="openFile('sertifikat_vaksin',sertifikat_vaksin)">
+                                                            @{{ sertifikat_vaksin }}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Transkip Nilai</th>
+                                                    <td>
+                                                        <p class="field cursor txt-blue"
+                                                            ng-click="openFile('transkip_nilai',transkip_nilai)">
+                                                            @{{ transkip_nilai }}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Slip Pembayaran KKN</th>
+                                                    <td>
+                                                        <p class="field cursor txt-blue"
+                                                            ng-click="openFile('slip_pembayaran_kkn',slip_pembayaran_kkn)">
+                                                            @{{ slip_pembayaran_kkn }}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Slip Pembayaran Semester Akhir</th>
+                                                    <td>
+                                                        <p class="field cursor text-blue"
+                                                            ng-click="openFile('slip_pembayaran_smt',slip_pembayaran_smt)">
+                                                            @{{ slip_pembayaran_smt }}</p>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </div>
+
                                     </div>
 
                                 </div>
