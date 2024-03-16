@@ -43,9 +43,10 @@ app.controller("homeController", function ($scope, service) {
         service.dataCalonKkn(res => {
             datamhs = res.data;
             fun.dataanggota = res.data;
+            $(".data-group-kkn").removeClass("hide");
+            $(".btn-ring").hide();
             for (var i = 0; i < datamhs.length; i++) {
                 datamhs[i].check = false;
-
             }
         });
     }
