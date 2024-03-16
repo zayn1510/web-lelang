@@ -106,6 +106,10 @@ Route::prefix("v1")->group(function(){
             Route::delete("/{id}",[GroupController::class,"delete_data"]);
             Route::get("detail/{id}",[GroupController::class,"detail_data"]);
         });
+
+        Route::prefix("unassign-anggota-group")->group(function(){
+            Route::delete("/{id}",[GroupController::class,"unassign_mahasiswa_in_group"]);
+        });
         Route::prefix("pengguna")->group(function(){
             Route::get("/",[LoginController::class,"akun_pengguna"]);
         });

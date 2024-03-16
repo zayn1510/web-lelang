@@ -117,7 +117,6 @@
                                         <tbody style="font-size: 12px">
                                             <tr class="text-center" ng-repeat="row in datagroupkkn">
                                                 <td>@{{ $index + 1 }}</td>
-                                                <td>@{{ row.nidn }}</td>
                                                 <td>@{{ row.nama_dosen }}</td>
                                                 <td>@{{ row.desa }}</td>
                                                 <td>@{{ row.jumlah }}</td>
@@ -200,6 +199,8 @@
                                                     <th>No</th>
                                                     <th>NIM</th>
                                                     <th>Nama Lengkap</th>
+                                                    <th>Fakultas</th>
+                                                    <th>Jurusan</th>
                                                     <th>Aksi</th>
                                                 </thead>
                                                 <tbody style="font-size: 12px">
@@ -207,6 +208,8 @@
                                                         <td>@{{ $index + 1 }}</td>
                                                         <td>@{{ row.nim_mhs }}</td>
                                                         <td>@{{ row.nama_mhs }}</td>
+                                                        <td>@{{ row.nama_fakultas }}</td>
+                                                        <td>@{{ row.nama_jurusan }}</td>
                                                         <td>
                                                             <button class="alert alert-success btn-edit"
                                                                 data-target="true"
@@ -285,12 +288,22 @@
                                             <th>No</th>
                                             <th>NIM</th>
                                             <th>Nama Lengkap</th>
+                                            <th>Fakultas</th>
+                                            <th>Jurusan</th>
+                                            <th>Aksi</th>
                                         </thead>
                                         <tbody style="font-size: 12px">
                                             <tr class="text-center" ng-repeat="row in datadetail">
                                                 <td>@{{ $index + 1 }}</td>
                                                 <td>@{{ row.nim_mhs }}</td>
                                                 <td>@{{ row.nama_mhs }}</td>
+                                                <td>@{{ row.nama_fakultas }}</td>
+                                                <td>@{{ row.nama_jurusan }}</td>
+                                                <td>
+                                                    <button class="alert alert-danger btn-delete"
+                                                        ng-click="unassignGroup(row,$event)"> Hapus</button>
+                                                    <span class="btn-ring"></span>
+                                                </td>
                                             </tr>
                                         </tbody>
                                         <tfoot>

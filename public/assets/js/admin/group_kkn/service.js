@@ -88,6 +88,19 @@ app.service("service", ["$http", function($http) {
         });
     }
 
+    this.unassignGroup= function(id,callback) {
+        $http({
+            url: URL_API+"unassign-anggota-group/"+id,
+            method: "DELETE",
+
+        }).then(function(e) {
+
+            callback(e.data);
+        }).catch(function(err) {
+
+        });
+    }
+
 
 
 }]);

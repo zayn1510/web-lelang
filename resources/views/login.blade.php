@@ -55,9 +55,13 @@
                     </div>
                     <div class="login-form-body" style="margin-top: -50px;">
                         <h4 class="text-center" style="margin-bottom: 20px;">{{$message}}</h4>
-
+                        <div class="alert alert-danger alert-dismissible hide fade show" role="alert" id="alert-error">
+                            <strong>Login Gagal!</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
                             <div class="form-gp">
-
                                 <label for="username">Username</label>
                                 <input type="username" name="username" id="username" class="form-login" ng-model="username" oninput="changeBorder(event,1)">
                                 <i class="ti-user"></i>
@@ -82,7 +86,8 @@
                                 </div>
                             </div>
                             <div class="submit-btn-area">
-                                <button id="form_submit" type="submit">Submit <i class="ti-arrow-right"></i></button>
+                                <button id="form_submit" class="btn-submit" type="submit">Submit <i class="ti-arrow-right"></i></button>
+                                <span class="btn-ring"></span>
                             </div>
                     </div>
                 </form>
