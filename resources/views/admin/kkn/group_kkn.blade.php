@@ -194,30 +194,35 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <table datatable="ng" class="table table-bordered">
-                                                <thead class="text-center">
-                                                    <th>No</th>
-                                                    <th>NIM</th>
-                                                    <th>Nama Lengkap</th>
-                                                    <th>Fakultas</th>
-                                                    <th>Jurusan</th>
-                                                    <th>Aksi</th>
-                                                </thead>
-                                                <tbody style="font-size: 12px">
-                                                    <tr class="text-center" ng-repeat="row in dataanggota">
-                                                        <td>@{{ $index + 1 }}</td>
-                                                        <td>@{{ row.nim_mhs }}</td>
-                                                        <td>@{{ row.nama_mhs }}</td>
-                                                        <td>@{{ row.nama_fakultas }}</td>
-                                                        <td>@{{ row.nama_jurusan }}</td>
-                                                        <td>
-                                                            <button class="alert alert-success btn-edit"
-                                                                data-target="true"
-                                                                ng-click="updateCalonKkn(row,$event)">Tambah Data</button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <span class="btn-ring" style="display: block;"></span>
+                                            <div class="hide data-group-kkn">
+                                                <table datatable="ng" class="table table-bordered">
+                                                    <thead class="text-center">
+                                                        <th>No</th>
+                                                        <th>NIM</th>
+                                                        <th>Nama Lengkap</th>
+                                                        <th>Fakultas</th>
+                                                        <th>Jurusan</th>
+                                                        <th>Aksi</th>
+                                                    </thead>
+                                                    <tbody style="font-size: 12px">
+
+                                                        <tr class="text-center" ng-repeat="row in dataanggota">
+                                                            <td>@{{ $index + 1 }}</td>
+                                                            <td>@{{ row.nim_mhs }}</td>
+                                                            <td>@{{ row.nama_mhs }}</td>
+                                                            <td>@{{ row.nama_fakultas }}</td>
+                                                            <td>@{{ row.nama_jurusan }}</td>
+                                                            <td>
+                                                                <button class="alert alert-success btn-edit"
+                                                                    data-target="true"
+                                                                    ng-click="updateCalonKkn(row,$event)">Tambah
+                                                                    Data</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
