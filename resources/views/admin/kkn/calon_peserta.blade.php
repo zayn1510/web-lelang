@@ -111,7 +111,7 @@
                         </div>
                         <div class="data-tab">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="col-12 detail-profil-mhs">
                                         <div class="row sub-profil">
                                             <div class="col-12">
@@ -173,79 +173,30 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <div class="row sub-profil">
+
                                         <div class="col-12">
-                                            <div class="profil-img">
-                                                <img src="@{{ foto }}" class="img-profils" id="img-load" />
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <table class="table table-responsive poppins">
-                                                <tr>
-                                                    <th>Kode Calon KKN</th>
-                                                    <td>@{{ kode_calon_kkn }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Ukuran Baju</th>
-                                                    <td>@{{ ukuran_baju }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Surat Izin Atasan</th>
-                                                    <td>
-                                                        <p class="field cursor txt-blue"
-                                                            ng-click="openFile('surat_izin_atasan',surat_izin_atasan)">
-                                                            @{{ surat_izin_atasan }}</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Surat Izin Orang Tua</th>
-                                                    <td>
-                                                        <p class="field cursor txt-blue"
-                                                            ng-click="openFile('surat_izin_ortu',surat_izin_ortu)">
-                                                            @{{ surat_izin_ortu }}</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>KRS Terakhir</th>
-                                                    <td>
-                                                        <p class="field cursor txt-blue"
-                                                            ng-click="openFile('krs_terakhir',krs_terakhir)">
-                                                            @{{ krs_terakhir }}</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Sertifikat Vaksin</th>
-                                                    <td>
-                                                        <p class="field cursor txt-blue"
-                                                            ng-click="openFile('sertifikat_vaksin',sertifikat_vaksin)">
-                                                            @{{ sertifikat_vaksin }}</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Transkip Nilai</th>
-                                                    <td>
-                                                        <p class="field cursor txt-blue"
-                                                            ng-click="openFile('transkip_nilai',transkip_nilai)">
-                                                            @{{ transkip_nilai }}</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Slip Pembayaran KKN</th>
-                                                    <td>
-                                                        <p class="field cursor txt-blue"
-                                                            ng-click="openFile('slip_pembayaran_kkn',slip_pembayaran_kkn)">
-                                                            @{{ slip_pembayaran_kkn }}</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Slip Pembayaran Semester Akhir</th>
-                                                    <td>
-                                                        <p class="field cursor text-blue"
-                                                            ng-click="openFile('slip_pembayaran_smt',slip_pembayaran_smt)">
-                                                            @{{ slip_pembayaran_smt }}</p>
-                                                    </td>
-                                                </tr>
+                                            <table class="table table-bordered poppins">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th>Nomor</th>
+                                                        <th>Judul Berkas</th>
+                                                        <th>File</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="row in databerkas" class="text-center">
+                                                        <td>@{{ $index + 1 }}</td>
+                                                        <td>@{{ row.title_berkas }}</td>
+                                                        <td><a href="/calonkkn/@{{row.name_berkas}}/@{{nim}}/@{{row.file}}" target="__blank">@{{ row.file }}</a></td>
+                                                        <td>
+                                                            <p class="alert alert-danger" ng-if="row.id_berkas_calon_kkn ==null">Belum ada</p>
+                                                            <p class="alert alert-info" ng-if="row.id_berkas_calon_kkn !=null">Tersedia</p>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
                                             </table>
                                         </div>
 

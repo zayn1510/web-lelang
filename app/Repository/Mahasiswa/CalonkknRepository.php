@@ -27,7 +27,7 @@ class CalonkknRepository
                 whereRaw("pk.id_periode_kkn=:id_periode", ["id_periode" => $id])->
                 select("ck.id_calon_kkn", "mhs.nama_mhs", "mhs.nim_mhs", "ck.id_mhs", "ck.email", "ck.nomor_hp",
                 "ck.kode_calon_kkn", "ck.ukuran_baju", "ck.kecamatan", "ck.kabupaten", "ck.desa",
-                "ck.id_berkas_calon", "ck.tgl_daftar", "ck.status", "ck.id_periode_kkn",
+                "ck.tgl_daftar", "ck.status", "ck.id_periode_kkn",
                 "pk.tahun_akademik", "pk.angkatan", "pk.tgl_akademik", "mhs.tempat_lahir_mhs", "mhs.tgl_lahir_mhs",
                 "mhs.angkatan_mhs"
             )->get();
@@ -51,6 +51,7 @@ class CalonkknRepository
     {
 
         try {
+            DB::beginTransaction();
             $dataupdate = $request->except("id_calon_kkn");
             $calon = CalonkknModel::findOrFail($request->only("id_calon_kkn"))->first();
             $angkatan = DB::table("tbl_periode_kkn")->where("id_periode_kkn", $calon["id_periode_kkn"])->first();
@@ -66,10 +67,13 @@ class CalonkknRepository
             ];
 
             \App\lib\Mailer::send($datamail);
+            DB::commit();
             return response()->json(["message" => "Success", "success" => true], 200);
         } catch (ModelNotFoundException $e) {
+            DB::rollBack();
             return response()->json(["message" => "Invalid ID", "success" => false], 500);
         } catch (\Throwable $th) {
+            DB::rollBack();
             return response()->json(["message" => "Error in " . $th->getMessage(), "success" => false], 500);
         }
     }
@@ -108,7 +112,7 @@ class CalonkknRepository
                 where("pk.status", 1)->
                 select("ck.id_calon_kkn", "mhs.nama_mhs", "mhs.nim_mhs", "ck.id_mhs", "ck.email", "ck.nomor_hp",
                 "ck.kode_calon_kkn", "ck.ukuran_baju", "ck.kecamatan", "ck.kabupaten", "ck.desa",
-                "ck.id_berkas_calon", "ck.tgl_daftar", "ck.status", "ck.id_periode_kkn",
+                "ck.tgl_daftar", "ck.status", "ck.id_periode_kkn",
                 "pk.tahun_akademik", "pk.angkatan", "pk.tgl_akademik", "mhs.tempat_lahir_mhs", "mhs.tgl_lahir_mhs",
                 "mhs.angkatan_mhs"
 
@@ -177,9 +181,6 @@ class CalonkknRepository
             $calonKknRequest["id_periode_kkn"] = $periode->id_periode_kkn;
             $allowinsertcalon = $calonKknRequest->only("id_mhs", "email", "nomor_hp", "ukuran_baju", "desa",
                 "kecamatan", "kabupaten", "tgl_daftar", "kode_calon_kkn", "status", "id_periode_kkn");
-            $allowberkas = $berkasRequest->only("surat_izin_atas", "surat_izin_ortu", "sertifikat_vaksin", "foto", "krs_terakhir", "slip_pembayaran", "transkip_nilai");
-            $id = DB::table("tbl_berkas_calon_kkn")->insertGetId($allowberkas);
-            $allowinsertcalon["id_berkas_calon"] = $id;
             $allowinsertcalon["tgl_daftar"] = date("Y-m-d");
             DB::table("tbl_calon_kkn")->insert($allowinsertcalon);
             DB::commit();
@@ -242,9 +243,8 @@ class CalonkknRepository
 
             $calonkkn = DB::table("tbl_calon_kkn as calon")->
                 join("tbl_mahasiswa as mhs", 'mhs.id_mhs', "=", "calon.id_mhs")->
-                whereRaw("id_calon_kkn=?", [$id])->selectRaw("mhs.nim_mhs,calon.id_berkas_calon,calon.id_calon_kkn")->first();
+                whereRaw("id_calon_kkn=?", [$id])->selectRaw("mhs.nim_mhs,calon.id_calon_kkn")->first();
             $nim = $calonkkn->nim_mhs;
-            $idberkas = $calonkkn->id_berkas_calon;
             $pathfoto = 'calonkkn/foto/' . $nim;
             $pathkrs = 'calonkkn/krs_terakhir/' . $nim;
             $pathsuratizinatasan = 'calonkkn/surat_izin_atasan/' . $nim;
@@ -264,7 +264,7 @@ class CalonkknRepository
             File::deleteDirectory($pathtranskipnilai);
             CalonkknModel::findOrFail($id)->delete();
             DB::table("tbl_detail_anggota_kkn")->whereRaw("id_calon_kkn=?", [$calonkkn->id_calon_kkn])->delete();
-            berkasCalonKknModel::whereRaw("id_berkas_calon_kkn=?", $idberkas)->delete();
+            berkasCalonKknModel::whereRaw("id_calon_kkn=?", $calonkkn->id_calon_kkn)->delete();
             DB::commit();
             return response()->json(["message" => "success", "success" => true], 200);
 

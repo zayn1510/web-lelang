@@ -122,4 +122,10 @@ class Page extends Controller
         [$data,$datalogin]=self::getResultData("Data Pengguna");
         return view("admin.pengguna",compact("data","datalogin"));
     }
+
+
+    function pageSyarat(){
+        [$data,$datalogin]=self::getResultData("Data Syarat Berkas KKN");
+        return view("admin.syarat_berkas",compact("data","datalogin"));
+    }
 }

@@ -40,6 +40,8 @@ app.controller("homeController", function ($scope, service) {
     }
 
     fun.loadCalonKkn = () => {
+        $(".btn-ring").show();
+        $(".data-group-kkn").addClass("hide");
         service.dataCalonKkn(res => {
             datamhs = res.data;
             fun.dataanggota = res.data;
