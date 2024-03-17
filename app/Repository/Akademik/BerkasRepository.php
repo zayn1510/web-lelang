@@ -1,38 +1,43 @@
 <?php
 namespace App\Repository\Akademik;
-use App\Http\Requests\mahasiswa\BerkasRequest;
+
 use App\lib\Uploadfile;
 use App\Models\mahasiswa\berkasCalonKknModel;
+use DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
-class BerkasRepository{
+class BerkasRepository
+{
 
-
-    static function upload_berkas_calon_kkn(Request $request){
+    public static function upload_berkas_calon_kkn(Request $request)
+    {
         try {
-            $result=Uploadfile::upload_berkas_calon_kkn($request);
-            $tipe=$request->tipe;
-            $check=$result["success"];
-            if($check){
-                $colomn=array($tipe=>$result["data"]);
+            DB::beginTransaction();
+            $result = Uploadfile::upload_berkas_calon_kkn($request);
+            $check = $result["success"];
+            if ($check) {
 
-                berkasCalonKknModel::findOrFail($request->only("id_berkas_calon_kkn"));
-                berkasCalonKknModel::where("id_berkas_calon_kkn",$request->id_berkas_calon_kkn)->update($colomn);
-                return ["message"=>"Upload File Berhasil","success"=>true,"data"=>$result["data"]];
+                $idmhs=$request->id_mhs;
+                $data = [
+                    "file" => $result["data"],
+                    "id_syarat_berkas" => $request->id_syarat_berkas,
+                ];
+                $calonkkn = DB::table("tbl_calon_kkn")->whereRaw("id_mhs=?",[$idmhs])->first();
+                $data["id_calon_kkn"] = $calonkkn->id_calon_kkn;
+                berkasCalonKknModel::create($data);
+                DB::commit();
+                return ["message" => "Upload File Berhasil", "success" => true, "data" => $result["data"]];
             }
-            return ["message"=>"Upload File Gagal","success"=>false,"data"=>$result["data"]];
+            return ["message" => "Upload File Gagal", "success" => false, "data" => $result["data"]];
+        } catch (ModelNotFoundException $e) {
+            DB::rollBack();
+            return response()->json(["message" => "Invalid ID", "success" => false], 500);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json(["message" => "Something Error To Query Results " . $th->getMessage(), "success" => false], 500);
         }
-        catch(ModelNotFoundException $e){
-            return response()->json(["message"=>"Invalid ID","success"=>false],500);
-        }
-     catch (\Throwable $th) {
-        return response()->json(["message"=>"Something Error To Query Results ".$th->getMessage(),"success"=>false],500);
-    }
-
 
     }
-
 
 }
-

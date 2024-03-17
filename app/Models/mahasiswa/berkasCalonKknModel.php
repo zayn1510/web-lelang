@@ -12,6 +12,5 @@ class berkasCalonKknModel extends Model
 
     protected $primaryKey="id_berkas_calon_kkn";
     public $timestamps=false;
-    protected $fillable=["id_berkas_calon_kkn","surat_izin_atasan","sertifikat_vaksin",
-    "surat_izin_ortu","krs_terakhir","transkip_nilai","slip_pembayaran_smt","slip_pembayaran_kkn","status"];
+    protected $fillable=["id_berkas_calon_kkn","id_syarat_berkas","file","id_calon_kkn"];
 }

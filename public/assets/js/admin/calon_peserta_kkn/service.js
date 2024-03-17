@@ -14,7 +14,7 @@ app.service("service", ["$http", function ($http) {
 
     this.getBerkasCalonKkn = function (id, callback) {
         $http({
-            url: URL_API + "mahasiswa/berkas-calon-kkn/" + id,
+            url: URL_API + "syarat-berkas-kkn/" + id,
             method: "GET"
         }).then(function (e) {
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\api\akademik\BerkasController;
 
 use App\Http\Controllers\api\akademik\BeritaController;
 
+use App\Http\Controllers\api\akademik\BerkasSyaratController;
 use App\Http\Controllers\api\akademik\Fakultas;
 use App\Http\Controllers\api\akademik\Jurusan;
 use App\Http\Controllers\api\akademik\PeriodeKknController;
@@ -106,6 +107,15 @@ Route::prefix("v1")->group(function(){
             Route::delete("/{id}",[GroupController::class,"delete_data"]);
             Route::get("detail/{id}",[GroupController::class,"detail_data"]);
         });
+
+        Route::prefix("syarat-berkas-kkn")->group(function(){
+            Route::post("/",[BerkasSyaratController::class,"save_data"]);
+            Route::get("/",[BerkasSyaratController::class,"get_data"]);
+            Route::get("/{id}",[BerkasSyaratController::class,"get_data_berkas_user"]);
+            Route::put("/{id}",[BerkasSyaratController::class,"update_data"]);
+            Route::delete("/{id}",[BerkasSyaratController::class,"delete_data"]);
+        });
+
 
         Route::prefix("unassign-anggota-group")->group(function(){
             Route::delete("/{id}",[GroupController::class,"unassign_mahasiswa_in_group"]);

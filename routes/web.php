@@ -37,4 +37,5 @@ Route::middleware(["auth","checkrole:admin"])->prefix("admin")->group(function()
     Route::get("dpl",[Page::class,"pageDosenKkn"]);
     Route::get("group-kkn",[Page::class,"pageGroupKkn"]);
     Route::get("pengguna",[Page::class,"pagePengguna"]);
+    Route::get("syarat",[Page::class,"pageSyarat"]);
 });
