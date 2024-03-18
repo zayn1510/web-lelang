@@ -149,7 +149,7 @@ class CalonkknRepository
                 where("ck.group", 0)->
                 select("ck.id_calon_kkn", "mhs.nama_mhs", "mhs.nim_mhs", "ck.id_mhs", "ck.email", "ck.nomor_hp",
                 "ck.kode_calon_kkn", "ck.ukuran_baju", "ck.kecamatan", "ck.kabupaten", "ck.desa",
-                "ck.id_berkas_calon", "ck.tgl_daftar", "ck.status", "ck.id_periode_kkn",
+                "ck.tgl_daftar", "ck.status", "ck.id_periode_kkn",
                 "pk.tahun_akademik", "pk.angkatan", "pk.tgl_akademik", "mhs.tempat_lahir_mhs", "mhs.tgl_lahir_mhs",
                 "mhs.angkatan_mhs", "dak.id as id_detail", "f.nama_fakultas", "j.nama_jurusan"
             )->get();

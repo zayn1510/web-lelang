@@ -82,7 +82,7 @@ class GroupRepo
                 where("pk.status", 1)->
                 select("ck.id_calon_kkn", "mhs.nama_mhs", "mhs.nim_mhs", "ck.id_mhs", "ck.email", "ck.nomor_hp",
                 "ck.kode_calon_kkn", "ck.ukuran_baju", "ck.kecamatan", "ck.kabupaten", "ck.desa",
-                "ck.id_berkas_calon", "ck.tgl_daftar", "ck.status", "ck.id_periode_kkn",
+                "ck.tgl_daftar", "ck.status", "ck.id_periode_kkn",
                 "pk.tahun_akademik", "pk.angkatan", "pk.tgl_akademik", "mhs.tempat_lahir_mhs", "mhs.tgl_lahir_mhs",
                 "mhs.angkatan_mhs", "dak.id as id_detail"
             )->get();
@@ -142,8 +142,8 @@ class GroupRepo
             $exist = DB::table("tbl_detail_anggota_kkn as dak")->
                 join("tbl_calon_kkn as ckk", "ckk.id_calon_kkn", "=", "dak.id_calon_kkn")
                 ->join("tbl_mahasiswa as mhs", "mhs.id_mhs", "=", "ckk.id_mhs")->
-                join("tbl_fakultas as f","f.id_fakultas","=","mhs.id_fakultas")->
-                join("tbl_jurusan as j","j.id_jurusan","=","mhs.id_jurusan")->
+                join("tbl_fakultas as f", "f.id_fakultas", "=", "mhs.id_fakultas")->
+                join("tbl_jurusan as j", "j.id_jurusan", "=", "mhs.id_jurusan")->
                 whereRaw("dak.id_group=?", [$idgroup])->
                 selectRaw("dak.id as anggota,mhs.nim_mhs,mhs.nama_mhs,f.nama_fakultas,j.nama_jurusan")->get();
             return response()->json(["message" => "Success", "success" => true, "data" => $exist], 200);
@@ -184,15 +184,21 @@ class GroupRepo
                 $member = DB::table("tbl_detail_anggota_kkn as d")
                     ->join("tbl_calon_kkn as c", "c.id_calon_kkn", "=", "d.id_calon_kkn")
                     ->join("tbl_mahasiswa as m", "m.id_mhs", "=", "c.id_mhs")
-                    ->leftJoin("tbl_berkas_calon_kkn as b", "b.id_berkas_calon_kkn", "=", "c.id_berkas_calon")
                     ->join("tbl_fakultas as f", "f.id_fakultas", "=", "m.id_fakultas")
                     ->join("tbl_jurusan as j", "j.id_jurusan", "=", "m.id_jurusan")
                     ->whereRaw("d.id_group=?", [$exits->id_group])
-                    ->selectRaw("d.id_calon_kkn,m.nim_mhs,m.nama_mhs,b.foto,f.nama_fakultas,j.nama_jurusan")
+                    ->selectRaw("d.id_calon_kkn,m.nim_mhs,m.nama_mhs,f.nama_fakultas,j.nama_jurusan")
                     ->orderBy("m.nama_mhs", "asc")->get();
                 // merge data
                 $exits = (object) array_merge((array) $exits, (array) $group);
 
+                foreach ($member as $key => $row) {
+                    $member[$key]->foto = DB::table("tbl_berkas_calon_kkn as bck")->
+                        join("tbl_syarat_berkas_kkn as sbk", "sbk.id", "bck.id_syarat_berkas")
+                        ->whereRaw("sbk.name_berkas=:name", ["name" => "pas_foto"])
+                        ->whereRaw("bck.id_calon_kkn=:idcalonkkn", ["idcalonkkn" => $row->id_calon_kkn])
+                        ->first()->file;
+                }
                 $exits->anggota = $member;
                 $exits->jumlah = count($member);
 

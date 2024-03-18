@@ -18,6 +18,25 @@ app.controller("homeController", function ($scope, service) {
     fun.sort_date = (a, b) => {
         return new Date(a.tanggal).getTime() - new Date(b.tanggal).getTime();
     }
+
+
+    status.addEventListener("change", (evt) => {
+        let obj = {
+            id_calon_kkn: id_calon_kkn,
+            status: status.value
+        };
+        $("#cover-spin").show();
+        service.konfirmasiCalon(obj, res => {
+            if (res.success) {
+                setTimeout(function () {
+                    fun.attr = true;
+                    $("#cover-spin").hide();
+                    fun.loadPesertaKkn();
+                    $scope.$apply();
+                }, 2000);
+            }
+        })
+    });
     fun.loadPesertaKkn = () => {
         service.dataCalonKkn(res => {
             fun.datapesertakkn = res.data;
@@ -93,24 +112,6 @@ app.controller("homeController", function ($scope, service) {
         fun.attr = true;
         fun.loadPesertaKkn();
     }
-    fun.konfirmasi = () => {
-        let obj = {
-            id_calon_kkn: id_calon_kkn,
-            status: status.value
-        };
-        $("#cover-spin").show();
-        service.konfirmasiCalon(obj, res => {
-            if (res.success) {
-                setTimeout(function () {
-                    fun.attr = true;
-                    $("#cover-spin").hide();
-                    fun.loadPesertaKkn();
-                    $scope.$apply();
-                }, 2000);
-            }
-        })
-    }
-
     fun.getDataByPeriode = () => {
         service.getCalonKknPeriode(id_periode.value, res => {
             fun.datapesertakkn = res.data;
