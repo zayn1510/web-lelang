@@ -193,11 +193,17 @@ class GroupRepo
                 $exits = (object) array_merge((array) $exits, (array) $group);
 
                 foreach ($member as $key => $row) {
-                    $member[$key]->foto = DB::table("tbl_berkas_calon_kkn as bck")->
+                    $foto = DB::table("tbl_berkas_calon_kkn as bck")->
                         join("tbl_syarat_berkas_kkn as sbk", "sbk.id", "bck.id_syarat_berkas")
                         ->whereRaw("sbk.name_berkas=:name", ["name" => "pas_foto"])
                         ->whereRaw("bck.id_calon_kkn=:idcalonkkn", ["idcalonkkn" => $row->id_calon_kkn])
-                        ->first()->file;
+                        ->first();
+                    if (!empty($foto)) {
+                        $member[$key]->foto = $foto->file;
+                    } else {
+                        $member[$key]->foto = null;
+                    }
+
                 }
                 $exits->anggota = $member;
                 $exits->jumlah = count($member);
