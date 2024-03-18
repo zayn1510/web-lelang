@@ -103,10 +103,14 @@
                     <div class="card-body" id="tabel-toko">
                         <div class="row" style="margin-bottom: 10px;">
                             <div class="col-10">
-                                <h4 class="text-center">Calon Peserta KKN</h4>
+                                <h4 class="poppins">Calon Peserta KKN</h4>
                             </div>
                             <div class="col-2">
-
+                                <select class="form-control poppins" id="status">
+                                    <option value="0">Review</option>
+                                    <option value="1">Diterima</option>
+                                    <option value="2">Ditolak</option>
+                                </select>
                             </div>
                         </div>
                         <div class="data-tab">
@@ -207,10 +211,7 @@
                                 <div class="col-md-12">
                                     <div class="row" style="margin-top: 20px;">
                                         <div class="col-10">
-                                            <button class="btn btn-danger" ng-click="cancel()">Batal</button>
-                                        </div>
-                                        <div class="col-2">
-                                            <button class="btn btn-primary" ng-click="konfirmasi()">Konfirmasi</button>
+                                            <button class="btn btn-danger poppins" ng-click="cancel()">Batal</button>
                                         </div>
                                     </div>
                                 </div>
