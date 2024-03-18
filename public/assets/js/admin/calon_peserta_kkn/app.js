@@ -26,6 +26,7 @@ app.controller("homeController", function ($scope, service) {
             status: status.value
         };
         $("#cover-spin").show();
+        status.value = 0;
         service.konfirmasiCalon(obj, res => {
             if (res.success) {
                 setTimeout(function () {
@@ -84,6 +85,7 @@ app.controller("homeController", function ($scope, service) {
         fun.kabupaten = row.kabupaten;
         fun.kecamatan = row.kecamatan;
         fun.desa = row.desa;
+        status.value = row.status;
         fun.nomor_hp = (row.nomor_hp !== null) ? row.nomor_hp : "belum ada";
         fun.email = row.email;
         fun.kode_calon_kkn = (row.kode_calon_kkn !== null) ? row.kode_calon_kkn : "belum ada";
