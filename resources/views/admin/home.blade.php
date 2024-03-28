@@ -129,7 +129,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12" style="margin-top: 20px;">
                     <div class="row" style="background-color: white;">
                         <div class="col-12">
                             <div class="grafik-app-kkn">
