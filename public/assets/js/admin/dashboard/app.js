@@ -15,149 +15,125 @@ function getRandomRgb() {
     var b = num & 255;
     return 'rgb(' + r + ', ' + g + ', ' + b + ')';
 }
-app.controller("homeController", function($scope, service) {
+app.controller("homeController", function ($scope, service) {
 
     var fun = $scope;
     var service = service;
-    const CAPTION_BULAN = [];
-    const CAPTIION_BULAN_PRODUK_KELUAR = []
-    const DATA_PRODUK_MASUK = []
-    const BACKGROUND_GRAFIK = [];
-    const DATA_PRODUK_KELUAR = []
 
 
-    const NAME_MONTH = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
+    fun.getDataMahasiswa = () => {
+        service.dataMahasiswa(res => {
+            const { data, success } = res;
+            var hasil = grafikJumlahMahasiswa(data);;
 
-    fun.dataDashboard = () => {
+            const labels = Object.keys(hasil);
+            const grafikcount = Object.values(hasil);
+            var grafikcolor = [];
 
-        service.dataDashboard(obj => {
+            for (var index = 0; index < grafikcount.length; index++) {
+                grafikcolor.push(getRandomRgb());
 
-            fun.produk = obj.data.stokproduk;
-            fun.produkmasuk = obj.data.produkmasuk;
-            fun.produkkeluar = obj.data.produkkeluar
-            fun.kasir = obj.data.kasir;
-            fun.totaltransaksikeluar = obj.data.totaltransaksikeluar
-            const grafikprodukkeluar = obj.grafikprodukkeluar
-            const grafikprodukmasuk = obj.grafikprodukmasuk
-            fun.grafikDataProdukKeluar(grafikprodukkeluar)
-            fun.grafikDataProdukMasuk(grafikprodukmasuk)
+            }
+
+            setTimeout(() => {
+                const grafikdata = {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Grafik Mahasiswa',
+                        backgroundColor: grafikcolor, // Different background colors
+                        borderColor: grafikcolor,
+                        data: grafikcount,
+                    }]
+                };
+
+                // Configuration options
+                const config = {
+                    type: 'bar', // Change to bar type for bar chart
+                    data: grafikdata,
+                };
+                var canvasmahasiswa = document.getElementById("chartmahasiswa");
+                var myChart = new Chart(
+                    canvasmahasiswa,
+                    config
+                );
+
+            }, 500);
+
+        });
+    }
+
+    fun.getDataKkn = () => {
+        service.dataCalonKkn(res => {
+            const { data, success } = res;
+            const calonkkngrafik = grafikJumlahCalonKkn(data);
+
+            const labels = Object.keys(calonkkngrafik);
+            const grafikcount = Object.values(calonkkngrafik);
+            var grafikcolor = [];
+
+            for (var index = 0; index < grafikcount.length; index++) {
+                grafikcolor.push(getRandomRgb());
+
+            }
+
+            setTimeout(() => {
+                const grafikdata = {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Grafik Calon Peserta KKN',
+                        backgroundColor: grafikcolor, // Different background colors
+                        borderColor: grafikcolor,
+                        data: grafikcount,
+                    }]
+                };
+
+                // Configuration options
+                const config = {
+                    type: 'bar', // Change to bar type for bar chart
+                    data: grafikdata,
+                };
+                var canvasmahasiswa = document.getElementById("chartcalonkkn");
+                var myChart = new Chart(
+                    canvasmahasiswa,
+                    config
+                );
+
+            }, 500);
+
         })
     }
 
-    fun.grafikDataProdukKeluar = (datagrafik) => {
+    function grafikJumlahCalonKkn(data) {
+        const jumlahPerFakultas = {};
 
-        for (var i = 0; i < datagrafik.length; i++) {
-            var obj = datagrafik[i]
-            CAPTION_BULAN.push(NAME_MONTH[obj.bulan - 1])
-            DATA_PRODUK_KELUAR.push(obj.jumlah)
-            BACKGROUND_GRAFIK.push(getRandomRgb());
+        data.forEach(calonkkn => {
+            const fakultas = calonkkn.nama_fakultas;
+            if (jumlahPerFakultas[fakultas]) {
+                jumlahPerFakultas[fakultas]++;
+            } else {
+                jumlahPerFakultas[fakultas] = 1;
+            }
+        });
 
-        }
-
-        var datagrafikalumni = {
-            labels: CAPTION_BULAN,
-            datasets: [{
-                data: DATA_PRODUK_KELUAR,
-                backgroundColor: BACKGROUND_GRAFIK,
-                borderColor: BACKGROUND_GRAFIK,
-                borderWidth: 1,
-
-            }]
-        }
-        var opt = {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            },
-            events: false,
-            legend: {
-                display: false
-            },
-            layout: {
-                padding: {
-                    top: 10
-                }
-            },
-            tooltips: {
-                enabled: true,
-                callbacks: {
-                    label: function(tooltipItem) {
-                        return tooltipItem.yLabel;
-                    }
-                }
-            },
-            hover: {
-                animationDuration: 0
-            },
-        };
-
-        var ctx = document.getElementById("myChart"),
-            myLineChart = new Chart(ctx, {
-                type: 'bar',
-                data: datagrafikalumni,
-                options: opt
-            });
+        return jumlahPerFakultas;
     }
-    fun.grafikDataProdukMasuk = (datagrafik) => {
 
-        for (var i = 0; i < datagrafik.length; i++) {
-            var obj = datagrafik[i]
-            CAPTIION_BULAN_PRODUK_KELUAR.push(NAME_MONTH[obj.bulan - 1])
-            DATA_PRODUK_MASUK.push(obj.jumlah)
-            BACKGROUND_GRAFIK.push(getRandomRgb());
+    function grafikJumlahMahasiswa(data) {
+        const jumlahPerFakultas = {};
 
-        }
+        data.forEach(mahasiswa => {
+            const fakultas = mahasiswa.nama_fakultas;
+            if (jumlahPerFakultas[fakultas]) {
+                jumlahPerFakultas[fakultas]++;
+            } else {
+                jumlahPerFakultas[fakultas] = 1;
+            }
+        });
 
-        var datagrafikalumni = {
-            labels: CAPTIION_BULAN_PRODUK_KELUAR,
-            datasets: [{
-                data: DATA_PRODUK_MASUK,
-                backgroundColor: BACKGROUND_GRAFIK,
-                borderColor: BACKGROUND_GRAFIK,
-                borderWidth: 1,
-
-            }]
-        }
-        var opt = {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            },
-            events: false,
-            legend: {
-                display: false
-            },
-            layout: {
-                padding: {
-                    top: 10
-                }
-            },
-            tooltips: {
-                enabled: true,
-                callbacks: {
-                    label: function(tooltipItem) {
-                        return tooltipItem.yLabel;
-                    }
-                }
-            },
-            hover: {
-                animationDuration: 0
-            },
-        };
-
-        var ctx = document.getElementById("myChart2"),
-            myLineChart = new Chart(ctx, {
-                type: 'bar',
-                data: datagrafikalumni,
-                options: opt
-            });
+        return jumlahPerFakultas;
     }
-    fun.dataDashboard();
+
+    fun.getDataMahasiswa();
+    fun.getDataKkn();
 
 });
