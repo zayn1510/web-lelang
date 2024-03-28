@@ -103,19 +103,18 @@ class CalonkknRepository
      */
     public static function get_data_calon_kkn(): JsonResponse
     {
-
         try {
-
             $result = DB::table("tbl_calon_kkn as ck")->
                 join("tbl_periode_kkn as pk", "pk.id_periode_kkn", "=", "ck.id_periode_kkn")->
                 join("tbl_mahasiswa as mhs", "mhs.id_mhs", "=", "ck.id_mhs")->
+                join("tbl_fakultas as f", "f.id_fakultas", "=", "mhs.id_fakultas")->
+                join("tbl_jurusan as j", "j.id_jurusan", "=", "mhs.id_jurusan")->
                 where("pk.status", 1)->
                 select("ck.id_calon_kkn", "mhs.nama_mhs", "mhs.nim_mhs", "ck.id_mhs", "ck.email", "ck.nomor_hp",
                 "ck.kode_calon_kkn", "ck.ukuran_baju", "ck.kecamatan", "ck.kabupaten", "ck.desa",
                 "ck.tgl_daftar", "ck.status", "ck.id_periode_kkn",
                 "pk.tahun_akademik", "pk.angkatan", "pk.tgl_akademik", "mhs.tempat_lahir_mhs", "mhs.tgl_lahir_mhs",
-                "mhs.angkatan_mhs"
-
+                "mhs.angkatan_mhs", "f.nama_fakultas", "j.nama_jurusan"
             )->get();
             return response()->json([
                 "data" => $result,

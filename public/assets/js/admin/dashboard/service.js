@@ -1,28 +1,28 @@
-app.service("service", ["$http", function($http) {
-    var link = "http://localhost:8000/api/admin/";
-    var dashboard = "http://localhost:8080/dashboard/main"
-    this.dataDashboard = function(callback) {
+app.service("service", ["$http", function ($http) {
+
+    this.dataMahasiswa = function (callback) {
         $http({
-            url: dashboard,
+            url: URL_API + "mahasiswa/load-data-mahasiswa",
             method: "GET"
-        }).then(function(e) {
+        }).then(function (e) {
 
             callback(e.data);
-        }).catch(function(err) {
+        }).catch(function (err) {
 
         });
     }
 
-    this.dataMahasiswa = function(callback) {
+    this.dataCalonKkn = function (callback) {
         $http({
-            url: link + "grafik-mahasiswa",
+            url: URL_API + "mahasiswa/load-data-calon-kkn",
             method: "GET"
-        }).then(function(e) {
+        }).then(function (e) {
 
             callback(e.data);
-        }).catch(function(err) {
+        }).catch(function (err) {
 
         });
     }
+
 
 }]);

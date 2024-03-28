@@ -16,7 +16,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="welcome-dashboard">
-                  <p class="poppins">Selamat Datang Di Periode KKN Tahun {{$data->periode->tahun_akademik}} Angkatan {{$data->periode->angkatan}}</p>
+                    <p class="poppins">Selamat Datang Di Periode KKN Tahun {{ $data->periode->tahun_akademik }} Angkatan
+                        {{ $data->periode->angkatan }}</p>
                 </div>
             </div>
         </div>
@@ -26,48 +27,101 @@
                 <div class="col-12">
                     <div class="row" style="margin-bottom: 10px;">
                         <div class="col-md-4" style="cursor: pointer"
-                            onclick="window.location.href='{{ url('admin/page/ruangan') }}'">
+                            onclick="window.location.href='{{ url('admin/calon-peserta-kkn') }}'">
                             <div class="single-report">
                                 <div class="s-report-inner pr--10 pt--30 mb-3">
-                                    <div class="icon"><i class="ti-user"></i></div>
+                                    <div class="icon calon-peserta-kkn"><i class="ti-user"></i></div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Calon Peserta KKN</h4>
 
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
-                                        <h2>{{$data->calonkkn[0]->jumlah}}</h2>
+                                        <h2>{{ $data->calonkkn[0]->jumlah }}</h2>
                                     </div>
                                 </div>
 
                             </div>
                         </div>
                         <div class="col-md-4" style="cursor: pointer"
-                            onclick="window.location.href='{{ url('admin/page/mapel') }}'">
+                            onclick="window.location.href='{{ url('admin/dpl') }}'">
                             <div class="single-report">
                                 <div class="s-report-inner pr--10 pt--30 mb-3">
-                                    <div class="icon"><i class="ti-user"></i></div>
+                                    <div class="icon dpl"><i class="ti-user"></i></div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Dosen Pembimbing Lapangan</h4>
 
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
-                                        <h2>{{$data->dpl[0]->jumlah}}</h2>
+                                        <h2>{{ $data->dpl[0]->jumlah }}</h2>
                                     </div>
                                 </div>
 
                             </div>
                         </div>
                         <div class="col-md-4" style="cursor: pointer"
-                            onclick="window.location.href='{{ url('admin/page/orangtua') }}'">
+                            onclick="window.location.href='{{ url('admin/desa-kkn') }}'">
                             <div class="single-report">
                                 <div class="s-report-inner pr--10 pt--30 mb-3">
-                                    <div class="icon"><i class="ti-location-pin"></i></div>
+                                    <div class="icon desa-kkn"><i class="ti-location-pin"></i></div>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Desa KKN</h4>
 
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
-                                        <h2>{{$data->desa[0]->jumlah}}</h2>
+                                        <h2>{{ $data->desa[0]->jumlah }}</h2>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-md-4" style="cursor: pointer"
+                            onclick="window.location.href='{{ url('admin/mahasiswa') }}'">
+                            <div class="single-report">
+                                <div class="s-report-inner pr--10 pt--30 mb-3" style="color: #323237;">
+                                    <div class="icon mahasiswa"><i class="ti-user"></i></div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Mahasiswa</h4>
+
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <h2>{{ $data->mahasiswa }}</h2>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="cursor: pointer"
+                            onclick="window.location.href='{{ url('admin/pengguna') }}'">
+                            <div class="single-report">
+                                <div class="s-report-inner pr--10 pt--30 mb-3">
+                                    <div class="icon"><i class="ti-id-badge"></i></div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Pengguna</h4>
+
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <h2>{{ $data->pengguna }}</h2>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="cursor: pointer"
+                            onclick="window.location.href='{{ url('admin/berita') }}'">
+                            <div class="single-report">
+                                <div class="s-report-inner pr--10 pt--30 mb-3">
+                                    <div class="icon berita"><i class="ti-archive"></i></div>
+                                    <div class="s-report-title d-flex justify-content-between">
+                                        <h4 class="header-title mb-0">Berita</h4>
+
+                                    </div>
+                                    <div class="d-flex justify-content-between pb-2">
+                                        <h2>{{ $data->berita }}</h2>
                                     </div>
                                 </div>
 
@@ -76,6 +130,22 @@
                     </div>
                 </div>
                 <div class="col-12">
+                    <div class="row" style="background-color: white;">
+                        <div class="col-12">
+                            <div class="grafik-app-kkn">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <canvas id="chartmahasiswa" class="chart-mahasiswa" width="200" height="200"></canvas>
+                                    </div>
+                                    <div class="col-6">
+                                        <canvas id="chartcalonkkn" class="chart-calon-kkn" width="200" height="200"></canvas>
+                                    </div>"
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12" style="margin-top: 20px;">
                     <div class="table-dashboard poppins">
                         <div class="row">
                             <div class="col-md-12">
@@ -99,7 +169,8 @@
                                         @foreach ($data->grup as $row)
                                             <tr class="text-center">
                                                 <td>{{ $counter }}</td>
-                                                <td>{{ $row->gelar_depan }} {{ $row->nama_dosen }} {{ $row->gelar_belakang }}</td>
+                                                <td>{{ $row->gelar_depan }} {{ $row->nama_dosen }}
+                                                    {{ $row->gelar_belakang }}</td>
                                                 <td>{{ $row->desa }}</td>
                                                 <td>{{ $row->desa }}</td>
                                                 <td>{{ $row->jumlah }} Peserta</td>
@@ -127,10 +198,9 @@
     </div>
 @endsection
 @section('javascript')
-    <script src="{{ asset('grafik/chart.min.js') }}"></script>
+    <script src="{{ asset('grafik/Chart.min.js') }}"></script>
     <script src="{{ asset('assets/angularjs/angular.min.js') }}"></script>
     <script src="{{ asset('assets/angularjs/angular-route.min.js') }}"></script>
     <script src="{{ asset('assets/js/admin/dashboard/app.js') }}"></script>
     <script src="{{ asset('assets/js/admin/dashboard/service.js') }}"></script>
 @endsection
-
