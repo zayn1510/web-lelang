@@ -32,6 +32,7 @@
                                         <th>Username</th>
                                         <th>Email</th>
                                         <th>Role</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 12px">
@@ -40,6 +41,10 @@
                                         <td>@{{ row.username }}</td>
                                         <td>@{{ row.email}}</td>
                                         <td>@{{ row.role }}</td>
+                                        <td>
+                                            <span class="fa fa-trash" style="font-size: 20px;color:red;cursor: pointer;"
+                                                ng-click="delete(row)"></span>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
