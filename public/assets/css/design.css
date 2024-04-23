@@ -366,7 +366,8 @@
 .cursor {
     cursor: pointer;
 }
-.txt-blue{
+
+.txt-blue {
     color: #0275d8;
 }
 
@@ -425,17 +426,22 @@ td .btn-edit {
 
 /* Define the loading animation */
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+    0% {
+        transform: rotate(0deg);
+    }
 
-  /* Apply styles to the loading container */
-  .loading-container {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Apply styles to the loading container */
+.loading-container {
     text-align: center;
-  }
+}
 
-  /* Apply the animation to the element with the specified class */
-  .loading-animation {
+/* Apply the animation to the element with the specified class */
+.loading-animation {
     border: 4px solid rgba(0, 0, 0, 0.1);
     border-top: 4px solid #3498db;
     border-radius: 50%;
@@ -443,20 +449,20 @@ td .btn-edit {
     height: 40px;
     margin: auto;
     animation: spin 2s linear infinite;
-  }
+}
 
-  /* Style the caption */
-  .loading-container p {
+/* Style the caption */
+.loading-container p {
     font-size: 16px;
     margin-top: 10px;
     font-weight: bold;
-  }
+}
 
-  .btn-ring{
+.btn-ring {
     display: none;
-  }
+}
 
-  .btn-ring:after {
+.btn-ring:after {
     content: "";
     display: block;
     width: 25px;
@@ -469,16 +475,19 @@ td .btn-edit {
     justify-content: center;
     align-items: center;
     margin: auto;
-  }
-  @keyframes ring {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
+}
 
-.hide{
+@keyframes ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.hide {
     display: none;
 }
+

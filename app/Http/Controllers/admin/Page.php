@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
 class Page extends Controller
@@ -14,6 +15,30 @@ class Page extends Controller
     {
         $message = "Selamat Datang Admin";
         return view("login", compact("message"));
+    }
+
+    public static function waktuLalu($waktu_diberikan)
+    {
+        $waktu_sekarang = time();
+
+        $selisih_detik = $waktu_sekarang - strtotime($waktu_diberikan);
+
+        $selisih_tahun = floor($selisih_detik / (60 * 60 * 24 * 365));
+        $selisih_bulan = floor($selisih_detik / (60 * 60 * 24 * 30));
+        $selisih_hari = floor($selisih_detik / (60 * 60 * 24));
+        $selisih_jam = floor($selisih_detik / (60 * 60));
+
+        if ($selisih_tahun > 0) {
+            return $selisih_tahun . ' tahun yang lalu';
+        } elseif ($selisih_bulan > 0) {
+            return $selisih_bulan . ' bulan yang lalu';
+        } elseif ($selisih_hari > 0) {
+            return $selisih_hari . ' hari yang lalu';
+        } elseif ($selisih_jam > 0) {
+            return $selisih_jam . ' jam yang lalu';
+        } else {
+            return 'Baru saja';
+        }
     }
 
     private static function getResultData($ket)
@@ -39,7 +64,7 @@ class Page extends Controller
             ->whereRaw("periode.status=?", [1])->selectRaw("COUNT(desa.id_desa) as jumlah")->get();
 
         $data->mahasiswa = DB::table("tbl_mahasiswa")->count();
-        
+
         $data->pengguna = DB::table("users")->count();
         $data->berita = DB::table("tbl_berita")->count();
 
@@ -55,7 +80,19 @@ class Page extends Controller
         // data periode
         $data->periode = DB::table("tbl_periode_kkn as periode")->selectRaw("periode.tahun_akademik,periode.angkatan")
             ->whereRaw("periode.status=?", [1])->first();
-
+        $notifikasi = DB::table("tbl_notifikasi")->where('read', 0);
+        $data->notifikasi = $notifikasi->count();
+        $data->datanotifikasi = $notifikasi->get();
+        $datanotifikasi = [];
+        foreach ($notifikasi->get() as $key => $value) {
+            $context = $value->context;
+            $value->waktu = self::waktuLalu($value->updated_at);
+            if ($context == 1) {
+                $value->url = getenv("URL_APP") . "admin/update-notifikasi/" . $value->id;
+            }
+            $datanotifikasi[] = $value;
+        }
+        $data->datanotifikasi = $datanotifikasi;
         $datalogin = new \stdClass();
         $datalogin->id_pengguna = Auth::user()->id_pengguna;
         $datalogin->name = Auth::user()->username;

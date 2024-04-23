@@ -15,7 +15,7 @@ class LoginController extends Controller
      * @param \App\Http\Requests\akun\LoginRequest $loginRequest
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login_akun(LoginRequest $loginRequest) : JsonResponse
+    public function login_akun(LoginRequest $loginRequest): JsonResponse
     {
         return LoginRepository::login_akun($loginRequest);
     }
@@ -25,7 +25,7 @@ class LoginController extends Controller
      * @param mixed $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function detail_akun($id) : JsonResponse
+    public function detail_akun($id): JsonResponse
     {
         return LoginRepository::detail_akun($id);
     }
@@ -34,10 +34,14 @@ class LoginController extends Controller
      * Summary of akun_pengguna
      * @return \Illuminate\Http\JsonResponse
      */
-    public function akun_pengguna() : JsonResponse
+    public function akun_pengguna(): JsonResponse
     {
         return LoginRepository::akun_pengguna();
     }
 
+    public function delete_pengguna(int $id): JsonResponse
+    {
+        return LoginRepository::deletePengguna($id);
+    }
 
 }

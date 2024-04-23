@@ -70,7 +70,7 @@
             <div class="sidebar-header">
                 <div class="logo">
 
-                    <p style="color: white;font-weight: bolder;">{{$data->name_aplikasi}}</p>
+                    <p style="color: white;font-weight: bolder;">{{ $data->name_aplikasi }}</p>
 
                 </div>
             </div>
@@ -167,67 +167,43 @@
                     </div>
                     <!-- profile info & task notification -->
                     <div class="col-md-6 col-sm-4 clearfix">
-                        <ul class="notification-area pull-right">
 
+                        <ul class="notification-area pull-right">
                             <li class="dropdown">
                                 <i class="ti-bell dropdown-toggle" data-toggle="dropdown">
-
+                                    @if ($data->notifikasi > 0)
+                                        <span style="background-color: red;">{{ $data->notifikasi }}</span>
+                                    @endif
                                 </i>
+
                                 <div class="dropdown-menu bell-notify-box notify-box">
-                                    <span class="notify-title">You have 3 new notifications <a href="#">
-                                            view all</a></span>
-                                    <div class="nofity-list" style="background-color: red;o">
-                                        <a href="#" class="notify-item">
+                                    @if ($data->notifikasi > 0)
+                                        <span class="notify-title">Hai admin ada {{ $data->notifikasi }} notifikasi
+                                            terbaru</span>
+                                    @else
+                                        <span class="notify-title">Tidak ada notifikasi</span>
+                                    @endif
+                                    <div class="nofity-list">
+
+                                        @foreach ($data->datanotifikasi as $key => $value)
+                                            <a href="{{ $value->url }}" class="notify-item">
+                                                <div class="notify-thumb"><i class="ti-comments-smiley btn-info"></i>
+                                                </div>
+                                                <div class="notify-text">
+                                                    <p>{{ $value->message }}</p>
+                                                    <span>{{ $value->waktu }}</span>
+                                                </div>
+                                            </a>
+                                        @endforeach
+
+
+                                        {{-- <a href="#" class="notify-item">
                                             <div class="notify-thumb"><i class="ti-key btn-danger"></i></div>
                                             <div class="notify-text">
                                                 <p>You have Changed Your Password</p>
                                                 <span>Just Now</span>
                                             </div>
-                                        </a>
-                                        <a href="#" class="notify-item">
-                                            <div class="notify-thumb"><i class="ti-comments-smiley btn-info"></i>
-                                            </div>
-                                            <div class="notify-text">
-                                                <p>New Commetns On Post</p>
-                                                <span>30 Seconds ago</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="notify-item">
-                                            <div class="notify-thumb"><i class="ti-key btn-primary"></i></div>
-                                            <div class="notify-text">
-                                                <p>Some special like you</p>
-                                                <span>Just Now</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="notify-item">
-                                            <div class="notify-thumb"><i class="ti-comments-smiley btn-info"></i>
-                                            </div>
-                                            <div class="notify-text">
-                                                <p>New Commetns On Post</p>
-                                                <span>30 Seconds ago</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="notify-item">
-                                            <div class="notify-thumb"><i class="ti-key btn-primary"></i></div>
-                                            <div class="notify-text">
-                                                <p>Some special like you</p>
-                                                <span>Just Now</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="notify-item">
-                                            <div class="notify-thumb"><i class="ti-key btn-danger"></i></div>
-                                            <div class="notify-text">
-                                                <p>You have Changed Your Password</p>
-                                                <span>Just Now</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="notify-item">
-                                            <div class="notify-thumb"><i class="ti-key btn-danger"></i></div>
-                                            <div class="notify-text">
-                                                <p>You have Changed Your Password</p>
-                                                <span>Just Now</span>
-                                            </div>
-                                        </a>
+                                        </a> --}}
                                     </div>
                                 </div>
                             </li>
@@ -280,9 +256,9 @@
     <script src="{{ asset('assets/js/plugins.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <script>
-        var URL_API="<?php echo getenv("URL_API");?>";
-        var URL_FILE="<?php echo getenv("URL_FILE");?>";
-        var URL_APP="<?php echo getenv("URL_APP");?>";
+        var URL_API = "<?php echo getenv('URL_API'); ?>";
+        var URL_FILE = "<?php echo getenv('URL_FILE'); ?>";
+        var URL_APP = "<?php echo getenv('URL_APP'); ?>";
     </script>
 
     @yield('javascript')

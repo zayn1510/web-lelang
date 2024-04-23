@@ -23,6 +23,4 @@ app.service("service", ["$http", function ($http) {
 
         });
     }
-
-
 }]);
